@@ -1,14 +1,14 @@
 import '../stylesheets/style.scss'
 
-const $ = (selector) => {
-  return document.querySelector(selector)
-}
-
 (() => {
   let canvas
   let context
   const state = {
     particles: [],
+  }
+
+  const $ = (selector) => {
+    return document.querySelector(selector)
   }
 
   const randomBetween = (min, max) => {
@@ -25,8 +25,9 @@ const $ = (selector) => {
   }
 
   const getRandomColor = () => {
-    var letters = '0123456789ABCDEF'
-    var color = '#'
+    // var letters = '0123456789ABCDEF'
+    const letters = '56789ABCDEF'
+    let color = '#'
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)]
     }
@@ -48,7 +49,7 @@ const $ = (selector) => {
       createParticle()
     }
 
-    if (state.particles.length > 600) {
+    if (state.particles.length > 1000) {
       state.particles.splice(randomBetween(state.particles.length - 1), 1)[0]
     }
 
@@ -68,6 +69,10 @@ const $ = (selector) => {
 
     canvas.width = 1920
     canvas.height = 1080
+
+    for (let i = 0; i < 1000; i++) {
+      createParticle()
+    }
 
     tick()
   }
