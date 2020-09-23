@@ -39,9 +39,13 @@ import '../stylesheets/style.scss'
     const eyes = {
       top: particle.y + (particle.size / 6),
       left,
-      right: left + (particle.size / 6),
-      size: particle.size / 6,
+      right: left + (particle.size / 2),
+      size: particle.size / 50,
     }
+
+    const randomOffset = randomBetween(particle.size / 10, particle.size / 10 + (particle.size / 10))
+    eyes.left += randomBetween
+    eyes.right += randomBetween
 
     context.beginPath()
     context.arc(eyes.left, eyes.top, eyes.size, 0, 2 * Math.PI, false)
