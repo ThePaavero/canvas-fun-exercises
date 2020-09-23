@@ -17,7 +17,7 @@ import '../stylesheets/style.scss'
 
   const createParticle = () => {
     state.particles.push({
-      size: randomBetween(10, 100),
+      size: randomBetween(30, 100),
       x: randomBetween(0, canvas.width),
       y: randomBetween(0, canvas.height),
       color: getRandomColor(),
@@ -34,6 +34,26 @@ import '../stylesheets/style.scss'
     return color
   }
 
+  const drawEyes = (particle) => {
+    const left = particle.x + (particle.size / 6)
+    const eyes = {
+      top: particle.y + (particle.size / 6),
+      left,
+      right: left + (particle.size / 6),
+      size: particle.size / 6,
+    }
+
+    context.beginPath()
+    context.arc(eyes.left, eyes.top, eyes.size, 0, 2 * Math.PI, false)
+    context.fillStyle = '#fff'
+    context.fill()
+
+    context.beginPath()
+    context.arc(eyes.right, eyes.top, eyes.size, 0, 2 * Math.PI, false)
+    context.fillStyle = '#fff'
+    context.fill()
+  }
+
   const render = () => {
     context.clearRect(0, 0, canvas.width, canvas.height)
     state.particles.forEach(particle => {
@@ -41,6 +61,8 @@ import '../stylesheets/style.scss'
       context.arc(particle.x, particle.y, particle.size, 0, 2 * Math.PI, false)
       context.fillStyle = particle.color
       context.fill()
+
+      // drawEyes(particle)
     })
   }
 
