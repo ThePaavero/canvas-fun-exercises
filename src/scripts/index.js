@@ -7,8 +7,11 @@ import '../stylesheets/style.scss'
   let maxBuildings = 0
   let floor = 0
 
+  const levelsAmount = 3
+
   const state = {
     buildings: [],
+    currentLevel: 1,
   }
 
   const $ = (selector) => {
@@ -22,6 +25,7 @@ import '../stylesheets/style.scss'
   const render = () => {
     context.clearRect(0, 0, canvas.width, canvas.height)
     drawBuildings()
+    drawFloor()
   }
 
   const drawBuildings = () => {
@@ -31,16 +35,41 @@ import '../stylesheets/style.scss'
     })
   }
 
+  const drawFloor = () => {
+    context.fillStyle = 'black';
+    context.fillRect(0, floor, canvas.width, canvas.height - floor)
+  }
+
+  const levelToColor = (levelNumber) => {
+    switch (levelNumber) {
+      case 1:
+        return '#363636'
+      case 2:
+        return '#262626'
+      case 3:
+        return '#000'
+    }
+  }
+
   const createRandomBuilding = () => {
+    const level = state.currentLevel
+    maxBuildings = (Math.abs(state.currentLevel - levelsAmount) * 300) / state.currentLevel / 3
+    console.log(maxBuildings)
+    if ((state.buildings.length > maxBuildings / levelsAmount) && state.currentLevel < levelsAmount) {
+      state.currentLevel++
+    }
     const height = randomBetween(10, 150)
     const width = randomBetween(20, 40)
     const y = floor - height
+    const x = randomBetween(-10, canvas.width)
+    const color = levelToColor(level)
     const building = {
-      x: randomBetween(-10, canvas.width),
+      x,
       y,
       width,
       height,
-      color: 'black',
+      color,
+      level,
     }
     console.log(building)
     state.buildings.push(building)
@@ -48,7 +77,7 @@ import '../stylesheets/style.scss'
 
   const tick = () => {
 
-    if (randomBetween(0, 10) === 0 && state.buildings.length < maxBuildings) {
+    if (randomBetween(0, 2) === 0 && state.buildings.length < maxBuildings) {
       createRandomBuilding()
     }
 
@@ -62,7 +91,7 @@ import '../stylesheets/style.scss'
     context = canvas.getContext('2d')
     canvas.width = 1920
     canvas.height = 1080
-    maxBuildings = 20
+    maxBuildings = 100
     floor = canvas.height - 140
     tick()
   }
