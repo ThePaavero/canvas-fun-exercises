@@ -53,8 +53,6 @@ import '../stylesheets/style.scss'
 
   const createRandomBuilding = () => {
     const level = state.currentLevel
-    maxBuildings = (Math.abs(state.currentLevel - levelsAmount) * 300) / state.currentLevel / 3
-    console.log(maxBuildings)
     if ((state.buildings.length > maxBuildings / levelsAmount) && state.currentLevel < levelsAmount) {
       state.currentLevel++
     }
@@ -77,7 +75,8 @@ import '../stylesheets/style.scss'
 
   const tick = () => {
 
-    if (randomBetween(0, 2) === 0 && state.buildings.length < maxBuildings) {
+    // if (randomBetween(0, 2) === 0 && state.buildings.length < maxBuildings) {
+    if (state.buildings.length < maxBuildings) {
       createRandomBuilding()
     }
 
