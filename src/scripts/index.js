@@ -56,6 +56,9 @@ import '../stylesheets/style.scss'
     if ((state.buildings.length > maxBuildings / levelsAmount) && state.currentLevel < levelsAmount) {
       state.currentLevel++
     }
+
+    maxBuildings -= state.currentLevel / 2
+
     const height = randomBetween(10, 150)
     const width = randomBetween(20, 40)
     const y = floor - height
@@ -74,14 +77,10 @@ import '../stylesheets/style.scss'
   }
 
   const tick = () => {
-
-    // if (randomBetween(0, 2) === 0 && state.buildings.length < maxBuildings) {
     if (state.buildings.length < maxBuildings) {
       createRandomBuilding()
     }
-
     render()
-
     window.requestAnimationFrame(tick)
   }
 
@@ -90,7 +89,7 @@ import '../stylesheets/style.scss'
     context = canvas.getContext('2d')
     canvas.width = 1920
     canvas.height = 1080
-    maxBuildings = 100
+    maxBuildings = canvas.width / 3
     floor = canvas.height - 140
     tick()
   }
