@@ -1,26 +1,27 @@
 import '../stylesheets/style.scss'
+import Piece from './Piece'
 
 (() => {
+
+  let piece
   let canvas
   let context
-  const state = {
-    particles: [],
-  }
 
   const $ = (selector) => {
     return document.querySelector(selector)
   }
 
-  const randomBetween = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+  const clearCanvas = () => {
+    context.clearRect(0, 0, canvas.width, canvas.height)
   }
 
   const render = () => {
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    // ...
+    clearCanvas()
+    piece.draw()
   }
 
   const tick = () => {
+    piece.stateTick()
     render()
     window.requestAnimationFrame(tick)
   }
@@ -31,6 +32,8 @@ import '../stylesheets/style.scss'
 
     canvas.width = 1920
     canvas.height = 1080
+
+    piece = Piece(canvas, context)
 
     tick()
   }
