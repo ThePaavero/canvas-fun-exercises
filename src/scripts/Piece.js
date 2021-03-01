@@ -12,7 +12,8 @@ const Piece = (canvas, context) => {
       width: planeWidth,
       height: 18,
     },
-    targets: []
+    targets: [],
+    lastTargetX: 0,
   }
 
   const getFloor = () => {
@@ -21,12 +22,15 @@ const Piece = (canvas, context) => {
 
   const createTargets = () => {
     for (let i = 0; i < randomBetween(4, 8); i++) {
+      const height = randomBetween(20, 80)
+      const width = randomBetween(200, 700)
       state.targets.push({
         x: randomBetween(200, 400),
-        y: getFloor(),
-        width: randomBetween(200, 700),
-        height: randomBetween(20, 80)
+        y: getFloor() - height,
+        width,
+        height,
       })
+      state.lastTargetX += width
     }
   }
 
